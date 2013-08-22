@@ -4,6 +4,7 @@ import logging
 import argparse
 import inspect
 
+
 def get_calling_module():
     '''Hacky little function to get the module name which is calling the
     function'''
@@ -18,6 +19,7 @@ def get_calling_module():
     else:
         return module
 
+
 def get_module(module_name):
     '''Smart import wrapper which gets foo if you ask for foo and bar if you
     ask for foo.bar'''
@@ -28,6 +30,7 @@ def get_module(module_name):
         return getattr(package, module_name)
     else:
         return __import__(module_name)
+
 
 def main(*argv):
     handler = logging.StreamHandler()

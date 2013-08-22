@@ -1,9 +1,11 @@
 from formatter import Formatter
 
+
 def test_format_path():
     formatter = Formatter()
     formatter.format_path('tests', recursive=True)
     formatter.format_path('tests/test_brace.py')
+
 
 def test_main():
     from formatter.main import main

@@ -1,6 +1,7 @@
 from formatter import Formatter
 from nose import tools
 
+
 def test_assignment():
     tools.eq_(Formatter.format_string('a = 1'), 'a = 1\n')
     tools.eq_(Formatter.format_string('a != b'), 'a != b\n')

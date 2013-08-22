@@ -3,6 +3,7 @@ from nose import tools
 import sys
 from StringIO import StringIO
 
+
 def test_stdin():
     fh = StringIO()
     formatter = Formatter()

@@ -1,6 +1,7 @@
 from formatter import Formatter
 from nose import tools
 
+
 def test_paren_simple():
     tools.eq_(
         Formatter.format_string('(1,)'),
@@ -14,6 +15,7 @@ def test_paren_simple():
         Formatter.format_string('(())'),
         '(())\n',
     )
+
 
 def test_paren_complex():
     tools.eq_(

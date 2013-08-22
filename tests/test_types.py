@@ -1,5 +1,6 @@
 from formatter import types, tokens
 
+
 def test_types():
     assert repr(types.TOKEN_TYPES)
     t = tokens.Token({(0, ''): None}, 0, '', (0, 0), (0, 0), '')

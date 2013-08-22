@@ -9,7 +9,9 @@ from .types import TOKEN_TYPES
 
 logger = logging.getLogger(__name__)
 
+
 class Formatter(object):
+
     def __init__(self):
         self.logger = logger.getChild(self.__class__.__name__)
 
@@ -62,7 +64,7 @@ class Formatter(object):
 
             # Ugly but effective
             old_argv = sys.argv[:]
-            sys.argv = ['pep8','--ignore','W391',name]
+            sys.argv = ['pep8', '--ignore', 'W391', name]
             import pep8
             pep8style = pep8.StyleGuide(parse_argv=True, config_file=False)
             pep8style.check_files()

@@ -4,8 +4,10 @@ import nose
 from StringIO import StringIO
 import logging
 
+
 def test_default_type():
     TOKEN_OFFSETS['something_not_existing'] = None
+
 
 def test_token_offsets():
     t = TokenOffsets(None)
@@ -33,6 +35,7 @@ def test_token_offsets():
 def test_add():
     x = tokens.SmartList(1, 2)
     x + 'a'
+
 
 @nose.tools.raises(TypeError)
 def test_sub():

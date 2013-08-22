@@ -112,4 +112,3 @@ def get_token_types():
     return token_types
 
 TOKEN_TYPES = get_token_types()
-

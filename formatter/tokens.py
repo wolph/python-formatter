@@ -103,7 +103,8 @@ class Tokens(object):
             offset = offsets.get(token, recurse=True)
             logger.debug('offset: %r', offset)
             if stack:
-                logger.debug('stack: %r', [[y.token for y in x] for x in stack])
+                logger.debug(
+                    'stack: %r', [[y.token for y in x] for x in stack])
             if offset.children:
                 stack.append([offsets.get(end, recurse=True)
                               for end in offset.end])
@@ -183,7 +184,7 @@ class Token(object):
 
     def __init__(self, offsets, tok_type, token, begin, end, line):
         assert tok_type != TOKEN_TYPES.ERRORTOKEN, ('Cannot format erroneous '
-            'code')
+                                                    'code')
         self.offset = offsets[tok_type, token]
         self.tok_type = tok_type
         self.token = token

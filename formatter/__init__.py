@@ -9,7 +9,7 @@ __url__ = 'https://github.com/WoLpH/formatter'
 from .formatter import Formatter
 from .tokens import Token, Tokens
 from .offsets import (TokenOffsets, TokenOffset, DefaultTokenOffset,
-    TOKEN_OFFSETS)
+                      TOKEN_OFFSETS)
 from .types import TOKEN_TYPES
 from . import main
 

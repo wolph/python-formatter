@@ -30,4 +30,3 @@ setup(
         'console_scripts': ['formatter = formatter:main'],
     },
 )
-

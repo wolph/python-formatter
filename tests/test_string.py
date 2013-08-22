@@ -1,11 +1,13 @@
 from formatter import types, tokens, Formatter
 from nose import tools
 
+
 def test_string():
     tools.eq_(
         Formatter.format_string('''a = 'b' '''),
         '''a = 'b'\n''',
     )
+
 
 def test_string_type():
     x = types.StringTokenType(-255, 'TEST')

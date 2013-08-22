@@ -1,6 +1,7 @@
 from formatter import Formatter
 from nose import tools
 
+
 def test_brace_simple():
     tools.eq_(
         Formatter.format_string('{1:2,}'),
@@ -14,6 +15,7 @@ def test_brace_simple():
         Formatter.format_string('{"a": {}}'),
         '''{'a': {}}\n''',
     )
+
 
 def test_brace_complex():
     tools.eq_(

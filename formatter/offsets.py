@@ -254,7 +254,7 @@ def get_token_offsets():
     # Within slices we don't want extra space around the :
     bracket = token_offsets[TOKEN_TYPES.OP, '[']
     bracket.end = TOKEN_TYPES.OP, ']'
-    #bracket.children[':'].surround = 0
+    # bracket.children[':'].surround = 0
 
     # A little recursion to handle cases with braces in parenthesis and vice
     # versa
@@ -297,7 +297,7 @@ def get_token_offsets():
     print_.post = 1
     print_.end = [
         (TOKEN_TYPES.OP, ','),
-        (TOKEN_TYPES.NEWLINE, None), 
+        (TOKEN_TYPES.NEWLINE, None),
     ]
     print_.children[TOKEN_TYPES.OP, '>>'].surround = 0
     print_.children[TOKEN_TYPES.OP, '%'].surround = 1
