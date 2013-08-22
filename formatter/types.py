@@ -78,18 +78,18 @@ class StringTokenType(TokenType):
         # Replace """ with ' or '''
         if string.startswith('"""') and string.endswith('"""'):
             new_string = string[3:-3]
-            if ("'" in new_string and "'''" not in new_string and
+            if "'" not in new_string:
+                token.token = "'%s'" % new_string
+            elif ("'" in new_string and "'''" not in new_string and
                     token.begin_row == token.end_row):
                 token.token = "'''%s'''" % new_string
-            elif "'" not in new_string:
-                token.token = "'%s'" % new_string
         # Replace " with ' or '''
         elif string.startswith('"') and string.endswith('"'):
             new_string = string[1:-1]
-            if "'" in new_string and "'''" not in new_string:
-                token.token = "'''%s'''" % new_string
-            elif "'" not in new_string:
+            if "'" not in new_string:
                 token.token = "'%s'" % new_string
+            elif "'" in new_string and "'''" not in new_string:
+                token.token = "'''%s'''" % new_string
         # Replace ''' with '
         elif (string.startswith("'''") and string.endswith("'''")
                 and token.begin_row == token.end_row):

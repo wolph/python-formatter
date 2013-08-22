@@ -20,6 +20,8 @@ def test_types():
     except TypeError:
         pass
 
+    types.TOKEN_TYPES.something_that_does_not_exist
+
 if __name__ == '__main__':
     from base_test import main
     main('-vv')

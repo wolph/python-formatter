@@ -1,4 +1,4 @@
-from formatter import TokenOffsets, TOKEN_OFFSETS
+from formatter import TokenOffsets, TokenOffset, TOKEN_OFFSETS
 from formatter import tokens
 import nose
 from StringIO import StringIO
@@ -14,6 +14,12 @@ def test_token_offsets():
     assert repr(t)
     assert TOKEN_OFFSETS['='].surround
     TOKEN_OFFSETS['='].surround = 0, 0
+    TOKEN_OFFSETS[':'] = TokenOffset(
+        t,
+        t.parent.type,
+        t.parent.token,
+        children=t,
+    )
 
     x = tokens.SmartList(1, 2)
     assert str(x)

@@ -34,6 +34,16 @@ def test_string_type():
         '''a = 'b'\n''',
     )
 
+    tools.eq_(
+        Formatter.format_string('''a = """b'c"""'''),
+        "a = '''b'c'''\n",
+    )
+
+    tools.eq_(
+        Formatter.format_string('''a = """b\'\'\'c"""'''),
+        "a = '''b\'\'\'c'''\n",
+    )
+
 if __name__ == '__main__':
     from base_test import main
     main('-vv')
