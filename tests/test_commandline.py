@@ -9,7 +9,10 @@ def test_format_path():
 
 def test_main():
     from formatter.main import main
-    main('formatter', '-r')
+    try:
+        main('formatter/main.py', 'non_existing_directory')
+    except SystemExit:
+        pass
 
 if __name__ == '__main__':
     from base_test import main

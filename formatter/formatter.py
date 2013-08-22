@@ -4,7 +4,6 @@ import logging
 from cStringIO import StringIO
 
 from .tokens import Tokens
-from .types import TOKEN_TYPES
 
 
 logger = logging.getLogger(__name__)
@@ -56,6 +55,8 @@ class Formatter(object):
 
     def format_file(self, name):
         code = self(name)
+        import logging
+        logging.error('formatting: %r', name)
         if name == '-':
             sys.stdout.write(code)
         else:
@@ -64,7 +65,7 @@ class Formatter(object):
 
             # Ugly but effective
             old_argv = sys.argv[:]
-            sys.argv = ['pep8', '--ignore', 'W391', name]
+            sys.argv = ['pep8','--ignore','W391',name]
             import pep8
             pep8style = pep8.StyleGuide(parse_argv=True, config_file=False)
             pep8style.check_files()

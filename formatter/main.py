@@ -9,7 +9,8 @@ def main(*argv):
     parser.add_argument('-r', '--recursive', action='store_true',
                         help='Process directories recursively')
 
-    args = parser.parse_args(argv or sys.argv)
+    argv = argv or sys.argv
+    args = parser.parse_args(list(argv))
     formatter = Formatter()
     for file_ in args.files:
         formatter.format_path(file_, args.recursive)
