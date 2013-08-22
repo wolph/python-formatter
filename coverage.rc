@@ -1,9 +1,9 @@
+[report]
+exclude_lines =
+    if __name__ == '__main__':
+    if __name__ == .__main__.:
+
 [run]
 source = formatting,tests
 omit =
     */nose/*
-
-[report]
-exclude_lines =
-    if __name__ == '__main__':
-
