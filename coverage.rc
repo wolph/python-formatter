@@ -1,0 +1,5 @@
+[run]
+source = formatting,tests
+omit =
+    */nose/*
+
