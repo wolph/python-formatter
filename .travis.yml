@@ -10,7 +10,7 @@ install:
 # command to run tests
 script:
     - python setup.py nosetests
-    - nosetests --with-coverage --cover-package=formatter --cover-erase
+    - nosetests --with-coverage --cover-erase --cover-package=formatter
 
 after_success:
     - coveralls
