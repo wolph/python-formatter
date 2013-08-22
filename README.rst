@@ -16,12 +16,19 @@ Introduction
 Due to a bug with line continuations we are currently running a fork of the
 `tokenize` library however.
 
+During every format sequence the `compile` method is used to check if no code
+has been broken, but backing up is still a good idea.
+
+The library is made to be very extendable and configurable but it's still in 
+the beginning phase. Eventually this will become a fully featured formatting 
+tool for Python.
+
 Install
 -------
 
 To install simply execute `python setup.py install` or `pip install
 formatter`.
-If you want to run the tests first, run `python setup.py nosetests`
+If you want to run the tests first, run `nosetests`
 
 Usage
 -----
