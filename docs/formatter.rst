@@ -33,14 +33,6 @@ formatter Package
     :undoc-members:
     :show-inheritance:
 
-:mod:`tokenize` Module
-----------------------
-
-.. automodule:: formatter.tokenize
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 :mod:`tokens` Module
 --------------------
 
