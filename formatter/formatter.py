@@ -55,8 +55,6 @@ class Formatter(object):
 
     def format_file(self, name):
         code = self(name)
-        import logging
-        logging.error('formatting: %r', name)
         if name == '-':
             sys.stdout.write(code)
         else:

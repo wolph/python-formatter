@@ -27,6 +27,6 @@ setup(
         'License :: OSI Approved :: BSD License',
     ],
     entry_points={
-        'console_scripts': ['formatter = formatter:main'],
+        'console_scripts': ['formatter = formatter.main:main'],
     },
 )
