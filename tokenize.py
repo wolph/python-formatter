@@ -209,7 +209,7 @@ class Untokenizer:
         # but explicit line continuations are not, so they're handled here.
         if row > self.prev_row:
             row_offset = row - self.prev_row
-            self.tokens.append("\\\n" * row_offset)
+            self.tokens.append(" \\\n" * row_offset)
             # Recalculate the column offset from the start of our new line
             col_offset = col
         if col_offset:
