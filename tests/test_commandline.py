@@ -14,6 +14,21 @@ def test_main():
     except SystemExit:
         pass
 
+    try:
+        main('formatter/main.py', '-v', 'non_existing_directory')
+    except SystemExit:
+        pass
+
+    try:
+        main('formatter/main.py', '-vv', 'non_existing_directory')
+    except SystemExit:
+        pass
+
+    try:
+        main('formatter/main.py', '-vvv', 'non_existing_directory')
+    except SystemExit:
+        pass
+
 if __name__ == '__main__':
     from base_test import main
     main('-vv')

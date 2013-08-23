@@ -265,6 +265,9 @@ def get_token_offsets():
     paren.children[TOKEN_TYPES.NAME, 'or'].surround = 1
     paren.children[TOKEN_TYPES.NAME, 'and'].surround = 1
     paren.children[TOKEN_TYPES.NAME].surround = 0
+    paren.children[TOKEN_TYPES.NAME, 'for'].surround = 1
+    paren.children[TOKEN_TYPES.NAME, 'if'].surround = 1
+    paren.children.update(keywords)
 
     # Within parameters we don't want extra space around the =
     brace = token_offsets[TOKEN_TYPES.OP, '{']
@@ -272,9 +275,6 @@ def get_token_offsets():
     brace.children[TOKEN_TYPES.OP, ':'].post = 1
     brace.children[TOKEN_TYPES.OP, ','].post = 1
     brace.children[TOKEN_TYPES.NAME].surround = 0
-    brace.children[TOKEN_TYPES.NAME, 'for'].surround = 1
-    brace.children[TOKEN_TYPES.NAME, 'if'].surround = 1
-    brace.children.update(keywords)
 
     # Within slices we don't want extra space around the :
     bracket = token_offsets[TOKEN_TYPES.OP, '[']
