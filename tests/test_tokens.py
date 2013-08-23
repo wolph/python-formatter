@@ -55,3 +55,4 @@ if __name__ == '__main__':
         if k.startswith('test_') and hasattr(v, '__call__'):
             print 'Running %r' % k
             v()
+

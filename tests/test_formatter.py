@@ -9,3 +9,4 @@ def test_syntax_error():
 if __name__ == '__main__':
     from base_test import main
     main('-vv')
+

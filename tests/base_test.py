@@ -64,3 +64,4 @@ def main(*argv):
             if k.startswith('test_') and hasattr(v, '__call__'):
                 print 'Running %r' % k
                 v()
+
