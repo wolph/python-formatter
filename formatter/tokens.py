@@ -265,7 +265,7 @@ class Token(object):
 
     Setting this to a tuple will set the first to the begin and the latter to
     the end.
-    
+
     This returns a :py:class:`~formatter.tokens.SmartList` with the begin and
     end row.''')
     begin = property(_get_begin, _set_begin, doc='''The begin coordinates.
@@ -279,7 +279,7 @@ class Token(object):
 
     Settings this to a tuple will set the first to the row and the latter to
     the col.
-    
+
     This returns a :py:class:`~formatter.tokens.SmartList` with the row and
     column.''')
     begin_col = property(_get_begin_col, _set_begin_col, doc='''The begin

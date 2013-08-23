@@ -170,8 +170,8 @@ class TokenOffset(object):
     ''')
     end = property(_get_end, _set_end, doc='''Set the end token in case of
     children.
-    
-    Should either be a token or a tuple with 
+
+    Should either be a token or a tuple with
     :class:`~formatter.types.TokenType` and `token` which will be a string.''')
 
     def __str__(self):

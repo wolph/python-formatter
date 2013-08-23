@@ -54,13 +54,8 @@ def main(*argv):
     else:
         level = logging.WARN
 
-    #format = logging.Formatter('%(levelname)s:%(name)s:%(message)s')
-    #handler = logging.StreamHandler()
-    #handler.setLevel(level)
-    #handler.setFormatter(format)
     logger = logging.getLogger('')
     logger.setLevel(level)
-    #logger.addHandler(handler)
 
     for module_name in args.modules:
         module = get_module(module_name)
