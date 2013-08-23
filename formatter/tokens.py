@@ -106,8 +106,10 @@ class Tokens(object):
                 logger.debug(
                     'stack: %r', [[y.token for y in x[1]] for x in stack])
             if offset.children:
-                stack.append((offsets, [offsets.get(end, recurse=True)
-                              for end in offset.end]))
+                stack.append((
+                    offsets,
+                    [offsets.get(end, recurse=True) for end in offset.end],
+                ))
                 logger.debug('added %r to stack', token.token)
                 offsets = offset.children
             elif stack and any(end == token for end in stack[-1][1]):
@@ -128,7 +130,7 @@ class Tokens(object):
             yield item
 
     def to_str(self):
-        '''Convert the tokens back to a string'''
+        'Convert the tokens back to a string'
         data = tokenize.untokenize(self.iterator)
         # Strip all trailing newlines at the end but make sure we end with a
         # newline
@@ -140,7 +142,7 @@ class Tokens(object):
         return '\n'.join(lines)
 
     def strip(self):
-        '''Strip all whitespace so we can begin formatting'''
+        'Strip all whitespace so we can begin formatting'
         self.iterator = self._strip(self.iterator)
         return self
 
