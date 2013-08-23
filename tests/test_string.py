@@ -47,6 +47,11 @@ def test_string_type():
         'a = """b\'\'\'c"""\n\n',
     )
 
+    tools.eq_(
+        Formatter.format_string('''a = "b\'\'\'c"'''),
+        'a = "b\'\'\'c"\n\n',
+    )
+
 if __name__ == '__main__':
     from base_test import main
     main('-vv')
