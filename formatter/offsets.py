@@ -107,32 +107,28 @@ class TokenOffset(object):
             post=self.post,
         )
 
-    def get_parent(self):
+    def _get_parent(self):
         return self._parent
 
-    def set_parent(self, parent):
+    def _set_parent(self, parent):
         assert isinstance(parent, TokenOffsets), 'parent must be a ' \
             'TokenOffset instance, was %s instead' % type(parent)
         self._parent = parent
 
-    parent = property(get_parent, set_parent)
-
-    def get_type(self):
+    def _get_type(self):
         return self._type
 
-    def set_type(self, type_):
+    def _set_type(self, type_):
         assert type_ in TOKEN_TYPES, 'Expected %r to be in %r' % (
             type_,
             self,
         )
         self._type = TOKEN_TYPES[type_]
 
-    type = property(get_type, set_type)
-
-    def get_surround(self):
+    def _get_surround(self):
         return self.pre, self.post
 
-    def set_surround(self, surround):
+    def _set_surround(self, surround):
         if isinstance(surround, int):
             pre = post = surround
         else:
@@ -141,19 +137,29 @@ class TokenOffset(object):
         self.pre = pre
         self.post = post
 
-    surround = property(get_surround, set_surround)
-
-    def get_end(self):
+    def _get_end(self):
         return self._end
 
-    def set_end(self, end):
+    def _set_end(self, end):
         if end is not None:
             if not isinstance(end, list):
                 end = [end]
             end = map(self.parent.get_key, end)
         self._end = end
 
-    end = property(get_end, set_end)
+    parent = property(_get_parent, _set_parent, doc='''The parent.
+    :class:`~formatter.offsets.TokenOffsets`''')
+    type = property(_get_type, _set_type, doc='''The type.
+    :class:`~formatter.types.TokenType`''')
+    surround = property(_get_surround, _set_surround, doc='''Surround the token
+    with this amount of space.
+    Setting will set the `pre` and `post` when given a tuple or :func:`int`.
+    ''')
+    end = property(_get_end, _set_end, doc='''Set the end token in case of
+    children.
+    
+    Should either be a token or a tuple with 
+    :class:`~formatter.types.TokenType` and `token` which will be a string.''')
 
     def __str__(self):
         return str(getattr(self, 'type', None))

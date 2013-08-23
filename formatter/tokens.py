@@ -194,79 +194,111 @@ class Token(object):
         self.end = end
         self.line = line
 
-    def get_line(self):
+    def _get_line(self):
         return self._line
 
-    def set_line(self, line):
+    def _set_line(self, line):
         if hasattr(self, '_line'):
             self.end_col += len(line) - len(self._line)
         self._line = line
-
-    line = property(get_line, set_line)
-
-    def preprocess(self):
-        self.type.preprocess(self)
 
     @property
     def type(self):
         return TOKEN_TYPES[self.tok_type]
 
-    def get_begin_row(self):
+    def _get_begin_row(self):
         return self._row[0]
 
-    def set_begin_row(self, line):
+    def _set_begin_row(self, line):
         self._row[0] = line
 
-    def get_end_row(self):
+    def _get_end_row(self):
         return self._row[1]
 
-    def set_end_row(self, line):
+    def _set_end_row(self, line):
         self._row[1] = line
 
-    def get_begin_col(self):
+    def _get_begin_col(self):
         return self._col[0]
 
-    def set_begin_col(self, col):
+    def _set_begin_col(self, col):
         self._col[0] = col
 
-    def get_end_col(self):
+    def _get_end_col(self):
         return self._col[1]
 
-    def set_end_col(self, col):
+    def _set_end_col(self, col):
         self._col[1] = col
 
-    def get_col(self):
+    def _get_col(self):
         return self._col
 
-    def set_col(self, col):
+    def _set_col(self, col):
         self._col.set(col)
 
-    def get_row(self):
+    def _get_row(self):
         return self._row
 
-    def set_row(self, row):
+    def _set_row(self, row):
         self._row.set(row)
 
-    def get_begin(self):
+    def _get_begin(self):
         return SmartList(self.begin_row, self.begin_col)
 
-    def set_begin(self, begin):
+    def _set_begin(self, begin):
         self.begin_row, self.begin_col = begin
 
-    def get_end(self):
+    def _get_end(self):
         return SmartList(self.end_row, self.end_col)
 
-    def set_end(self, end):
+    def _set_end(self, end):
         self.end_row, self.end_col = end
 
-    col = property(get_col, set_col)
-    row = property(get_row, set_row)
-    begin = property(get_begin, set_begin)
-    end = property(get_end, set_end)
-    end_col = property(get_end_col, set_end_col)
-    end_row = property(get_end_row, set_end_row)
-    begin_col = property(get_begin_col, set_begin_col)
-    begin_row = property(get_begin_row, set_begin_row)
+    col = property(_get_col, _set_col, doc='''The column.
+
+    Setting this to a tuple will set the first to the begin and the latter to
+    the end.
+
+    This returns a :py:class:`~formatter.tokens.SmartList` with the begin and
+    end column.''')
+    row = property(_get_row, _set_row, doc='''The row.
+
+    Setting this to a tuple will set the first to the begin and the latter to
+    the end.
+    
+    This returns a :py:class:`~formatter.tokens.SmartList` with the begin and
+    end row.''')
+    begin = property(_get_begin, _set_begin, doc='''The begin coordinates.
+
+    Settings this to a tuple will set the first to the row and the latter to
+    the col.
+
+    This returns a :py:class:`~formatter.tokens.SmartList` with the row and
+    the column.''')
+    end = property(_get_end, _set_end, doc='''The end.
+
+    Settings this to a tuple will set the first to the row and the latter to
+    the col.
+    
+    This returns a :py:class:`~formatter.tokens.SmartList` with the row and
+    column.''')
+    begin_col = property(_get_begin_col, _set_begin_col, doc='''The begin
+    column.''')
+    end_col = property(_get_end_col, _set_end_col, doc='''The end
+    column.''')
+    begin_row = property(_get_begin_row, _set_begin_row, doc='''The begin
+    row.''')
+    end_row = property(_get_end_row, _set_end_row, doc='''The end
+    row.''')
+    line = property(_get_line, _set_line, doc='''The line.
+
+    Setting the line automatically updates the column as well.
+
+    Returns a :func:`str` object with the line.''')
+
+    def preprocess(self):
+        ':func:`formatter.types.TokenType.preprocess`'
+        self.type.preprocess(self)
 
     def __len__(self):
         # Got to love magic numbers :)

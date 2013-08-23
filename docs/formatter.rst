@@ -4,7 +4,7 @@ formatter Package
 :mod:`formatter` Package
 ------------------------
 
-.. automodule:: formatter.__init__
+.. automodule:: formatter
     :members:
     :undoc-members:
     :show-inheritance:
