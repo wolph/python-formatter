@@ -312,6 +312,7 @@ def get_token_offsets():
     paren.children['and'].surround = 1
     paren.children['for'].surround = 1
     paren.children['if'].surround = 1
+    paren.children['yield'].surround = 0
     paren.children.update(keywords)
     paren.children.update(operators)
 
