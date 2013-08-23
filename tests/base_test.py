@@ -33,10 +33,6 @@ def get_module(module_name):
 
 
 def main(*argv):
-    handler = logging.StreamHandler()
-    logger = logging.getLogger('')
-    logger.addHandler(handler)
-
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-v',
@@ -58,8 +54,13 @@ def main(*argv):
     else:
         level = logging.WARN
 
+    #format = logging.Formatter('%(levelname)s:%(name)s:%(message)s')
+    #handler = logging.StreamHandler()
+    #handler.setLevel(level)
+    #handler.setFormatter(format)
+    logger = logging.getLogger('')
     logger.setLevel(level)
-    handler.setLevel(level)
+    #logger.addHandler(handler)
 
     for module_name in args.modules:
         module = get_module(module_name)

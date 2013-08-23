@@ -10,7 +10,7 @@ def main(*argv):
                         help='Process directories recursively')
 
     argv = argv or sys.argv
-    args = parser.parse_args(argv[1:])
+    args = parser.parse_args(argv[1: ])
     formatter = Formatter()
     for file_ in args.files:
         formatter.format_path(file_, args.recursive)

@@ -104,18 +104,18 @@ class Tokens(object):
             logger.debug('offset: %r', offset)
             if stack:
                 logger.debug(
-                    'stack: %r', [[y.token for y in x] for x in stack])
+                    'stack: %r', [[y.token for y in x[1]] for x in stack])
             if offset.children:
-                stack.append([offsets.get(end, recurse=True)
-                              for end in offset.end])
+                stack.append((offsets, [offsets.get(end, recurse=True)
+                              for end in offset.end]))
                 logger.debug('added %r to stack', token.token)
                 offsets = offset.children
-            elif stack and any(end == token for end in stack[-1]):
+            elif stack and any(end == token for end in stack[-1][1]):
                 logger.debug(
                     'removing %s from stack',
-                    ', '.join(repr(x.token) for x in stack[-1]),
+                    ', '.join(repr(x.token) for x in stack[-1][1]),
                 )
-                offsets = stack.pop()[0].parent
+                offsets = stack.pop()[0]
 
             yield token
 

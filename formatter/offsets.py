@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 class TokenOffsets(dict):
 
     def __init__(self, parent, default_type=None):
+        self.logger = logger.getChild(self.__class__.__name__)
         if default_type is not None:
             assert isinstance(default_type, TokenType), 'end must be ' \
                 'a TokenType'
@@ -72,6 +73,11 @@ class TokenOffsets(dict):
 
         return value
 
+    def update(self, other):
+        for k, v in other.iteritems():
+            if k not in self:
+                self[k].update(v)
+
     def __setitem__(self, key, value):
         if isinstance(key, basestring):
             assert self.default_type, 'Token type must be given'
@@ -84,6 +90,7 @@ class TokenOffset(object):
 
     def __init__(self, parent, type_, token, pre=0, post=0, children=None,
                  end=None):
+        self.logger = logger.getChild(self.__class__.__name__)
         self.token = token
         self.pre = pre
         self.post = post
@@ -97,6 +104,12 @@ class TokenOffset(object):
                 default_type=TOKEN_TYPES[type_],
             )
         self.children = children
+
+    def update(self, other):
+        self.pre = other.pre
+        self.post = other.post
+        self.end = other.end
+        self.children.update(other.children)
 
     def copy(self, type_=None, token=None):
         return TokenOffset(
@@ -112,7 +125,7 @@ class TokenOffset(object):
 
     def _set_parent(self, parent):
         assert isinstance(parent, TokenOffsets), 'parent must be a ' \
-            'TokenOffset instance, was %s instead' % type(parent)
+            'TokenOffsets instance, was %s instead' % type(parent)
         self._parent = parent
 
     def _get_type(self):
@@ -221,20 +234,23 @@ def get_token_offsets():
     token_offset = DefaultTokenOffset()
     token_offsets = token_offset.children
 
-    token_offsets.default_type = TOKEN_TYPES.NAME
-    token_offsets['with'].post = 1
-    token_offsets['assert'].post = 1
-    token_offsets['except'].post = 1
-    token_offsets['import'].post = 1
-    token_offsets['for'].post = 1
-    token_offsets['if'].post = 1
-    token_offsets['elif'].post = 1
-    token_offsets['return'].post = 1
-    token_offsets['as'].surround = 1
-    token_offsets['in'].surround = 1
-    token_offsets['or'].surround = 1
-    token_offsets['and'].surround = 1
-    token_offsets['not'].post = 1
+    keywords = DefaultTokenOffset().children
+    keywords.default_type = TOKEN_TYPES.NAME
+    keywords['with'].post = 1
+    keywords['assert'].post = 1
+    keywords['except'].post = 1
+    keywords['import'].post = 1
+    keywords['for'].post = 1
+    keywords['if'].post = 1
+    keywords['elif'].post = 1
+    keywords['return'].post = 1
+    keywords['as'].surround = 1
+    keywords['in'].surround = 1
+    keywords['or'].surround = 1
+    keywords['and'].surround = 1
+    keywords['not'].post = 1
+    logging.error('update: %r', token_offsets.update)
+    token_offsets.update(keywords)
 
     token_offsets.default_type = TOKEN_TYPES.OP
     token_offsets[':'].post = 1
@@ -244,8 +260,8 @@ def get_token_offsets():
     # Within parameters we don't want extra space around the =
     paren = token_offsets[TOKEN_TYPES.OP, '(']
     paren.end = TOKEN_TYPES.OP, ')'
-    paren.children['='].surround = 0
-    paren.children[','].post = 1
+    paren.children[TOKEN_TYPES.OP, '='].surround = 0
+    paren.children[TOKEN_TYPES.OP, ','].post = 1
     paren.children[TOKEN_TYPES.NAME, 'or'].surround = 1
     paren.children[TOKEN_TYPES.NAME, 'and'].surround = 1
     paren.children[TOKEN_TYPES.NAME].surround = 0
@@ -253,14 +269,18 @@ def get_token_offsets():
     # Within parameters we don't want extra space around the =
     brace = token_offsets[TOKEN_TYPES.OP, '{']
     brace.end = TOKEN_TYPES.OP, '}'
-    brace.children[':'].post = 1
-    brace.children[','].post = 1
+    brace.children[TOKEN_TYPES.OP, ':'].post = 1
+    brace.children[TOKEN_TYPES.OP, ','].post = 1
     brace.children[TOKEN_TYPES.NAME].surround = 0
 
     # Within slices we don't want extra space around the :
     bracket = token_offsets[TOKEN_TYPES.OP, '[']
     bracket.end = TOKEN_TYPES.OP, ']'
-    # bracket.children[':'].surround = 0
+    bracket.children[TOKEN_TYPES.OP, ':'].surround = 0
+    bracket.children[TOKEN_TYPES.OP, ','].post = 1
+    bracket.children[TOKEN_TYPES.NAME, 'for'].surround = 1
+    bracket.children[TOKEN_TYPES.NAME, 'if'].surround = 1
+    bracket.children.update(keywords)
 
     # A little recursion to handle cases with braces in parenthesis and vice
     # versa
