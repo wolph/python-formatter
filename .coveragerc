@@ -10,5 +10,5 @@ omit =
     */nose/*
     */tests/*
     */pep8.py
-    */tokenize.py
+    */tokenize_fork.py
 

@@ -1,4 +1,4 @@
-import tokenize
+import tokenize_fork as tokenize
 import logging
 
 logger = logging.getLogger(__name__)

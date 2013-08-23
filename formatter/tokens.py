@@ -1,4 +1,4 @@
-import tokenize
+import tokenize_fork as tokenize
 from .offsets import TOKEN_OFFSETS
 from .types import TOKEN_TYPES
 import logging
