@@ -134,7 +134,7 @@ class Tokens(object):
         data = tokenize.untokenize(self.iterator)
         # Strip all trailing newlines at the end but make sure we end with a
         # newline
-        data = data.rstrip() + '\n'
+        data = data.rstrip() + '\n\n'
         # Strip the trailing whitespace for all lines
         lines = data.split('\n')
         lines = [l.rstrip() for l in lines]
