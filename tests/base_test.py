@@ -46,7 +46,7 @@ def main(*argv):
         default=[get_calling_module()],
     )
 
-    args = parser.parse_args(argv or sys.argv)
+    args = parser.parse_args(argv or sys.argv[1:])
     if args.verbosity > 1:
         level = logging.DEBUG
     elif args.verbosity:
@@ -59,9 +59,10 @@ def main(*argv):
     logger.addHandler(logging.StreamHandler())
 
     for module_name in args.modules:
+        logger.info('Executing tests in %r', module_name)
         module = get_module(module_name)
         for k, v in sorted(module.__dict__.items()):
             if k.startswith('test_') and hasattr(v, '__call__'):
-                print 'Running %r' % k
+                logger.info('Executing %r', k)
                 v()
 
