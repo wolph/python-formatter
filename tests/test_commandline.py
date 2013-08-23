@@ -1,6 +1,7 @@
 import os
 import logging
 from formatter import Formatter
+import difflib
 
 def get_file_contents(path):
     with open(path) as fh:
@@ -9,15 +10,23 @@ def get_file_contents(path):
 def get_contents(search_path):
     for path, dirs, files in os.walk(search_path):
         for file_ in files:
-            if os.path.splitext(file_) == '.py':
+            if os.path.splitext(file_)[-1] == '.py':
                 full_path = os.path.join(path, file_)
-                logging.error('getting contents for %r', full_path)
-                yield full_path, get_file_contents(full_path)
+                yield get_file_contents(full_path)
 
 def check_or_revert(old_contents, full_path, new_content):
-    if old_contents[full_path] != new_content:
+    old_content = old_contents[full_path] 
+    if old_content != new_content:
         logging.error('File %r in the sample set changed, reverting '
             'change', full_path)
+
+        diff = '\n'.join(difflib.unified_diff(
+            old_content.split('\n'),
+            new_content.split('\n'),
+            full_path + '.original',
+            full_path + '.formatted',
+        ))
+        logging.info('Diff:\n%s', diff)
         with open(full_path, 'w') as fh:
             fh.write(old_contents[full_path])
 
@@ -26,7 +35,6 @@ def check_or_revert(old_contents, full_path, new_content):
 
 def test_format_path():
     formatter = Formatter()
-
     file_contents = dict(get_contents('tests/samples/'))
     formatter.format_path('tests/samples/', recursive=True)
     for k, v in get_contents('tests/samples/'):
@@ -58,5 +66,5 @@ def test_main():
 
 if __name__ == '__main__':
     from base_test import main
-    main('-vv')
+    main()
 
