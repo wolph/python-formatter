@@ -4,7 +4,7 @@ exclude_lines =
     if __name__ == .__main__.:
 
 [run]
-source = formatting
+source = formatter
 branch = True
 omit =
     */nose/*

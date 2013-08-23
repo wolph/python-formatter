@@ -41,7 +41,7 @@ def test_string_type():
 
     tools.eq_(
         Formatter.format_string('''a = """b\'\'\'c"""'''),
-        "a = '''b\'\'\'c'''\n",
+        'a = """b\'\'\'c"""\n',
     )
 
 if __name__ == '__main__':
