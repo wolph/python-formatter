@@ -244,13 +244,53 @@ def get_token_offsets():
     keywords['if'].post = 1
     keywords['elif'].post = 1
     keywords['return'].post = 1
+    keywords['yield'].post = 1
+    keywords['raise'].post = 1
+    keywords['lambda'].post = 1
+    
     keywords['as'].surround = 1
     keywords['in'].surround = 1
     keywords['or'].surround = 1
     keywords['and'].surround = 1
     keywords['not'].post = 1
-    logging.error('update: %r', token_offsets.update)
     token_offsets.update(keywords)
+
+    # Operators
+    operators = DefaultTokenOffset().children
+    operators.default_type = TOKEN_TYPES.OP
+    operators['!='].surround = 1
+    operators['%'].surround = 1
+    operators['%='].surround = 1
+    operators['&'].surround = 1
+    operators['&='].surround = 1
+    operators['*'].surround = 1
+    operators['**'].surround = 1
+    operators['**='].surround = 1
+    operators['*='].surround = 1
+    operators['+'].surround = 1
+    operators['+='].surround = 1
+    operators['-'].surround = 1
+    operators['-='].surround = 1
+    operators['/'].surround = 1
+    operators['//'].surround = 1
+    operators['//='].surround = 1
+    operators['/='].surround = 1
+    operators['<'].surround = 1
+    operators['<<'].surround = 1
+    operators['<<='].surround = 1
+    operators['<='].surround = 1
+    operators['=='].surround = 1
+    operators['>'].surround = 1
+    operators['>='].surround = 1
+    operators['>>'].surround = 1
+    operators['>>='].surround = 1
+    operators['^'].surround = 1
+    operators['^='].surround = 1
+    operators['|'].surround = 1
+    operators['|='].surround = 1
+    operators['='].surround = 1
+    operators[TOKEN_TYPES.NAME, 'is'].surround = 1
+    token_offsets.update(operators)
 
     token_offsets.default_type = TOKEN_TYPES.OP
     token_offsets[':'].post = 1
@@ -260,60 +300,73 @@ def get_token_offsets():
     # Within parameters we don't want extra space around the =
     paren = token_offsets[TOKEN_TYPES.OP, '(']
     paren.end = TOKEN_TYPES.OP, ')'
-    paren.children[TOKEN_TYPES.OP, '='].surround = 0
-    paren.children[TOKEN_TYPES.OP, ','].post = 1
-    paren.children[TOKEN_TYPES.NAME, 'or'].surround = 1
-    paren.children[TOKEN_TYPES.NAME, 'and'].surround = 1
+    paren.children.default_type = TOKEN_TYPES.OP
+    paren.children['='].surround = 0
+    paren.children['*'].surround = 0
+    paren.children['**'].surround = 0
+    paren.children[','].post = 1
+    paren.children.default_type = TOKEN_TYPES.NAME
     paren.children[TOKEN_TYPES.NAME].surround = 0
-    paren.children[TOKEN_TYPES.NAME, 'for'].surround = 1
-    paren.children[TOKEN_TYPES.NAME, 'if'].surround = 1
+    paren.children['or'].surround = 1
+    paren.children['and'].surround = 1
+    paren.children['for'].surround = 1
+    paren.children['if'].surround = 1
     paren.children.update(keywords)
+    paren.children.update(operators)
 
-    # Within parameters we don't want extra space around the =
+    # Within dicts we don't want extra space around the :
     brace = token_offsets[TOKEN_TYPES.OP, '{']
     brace.end = TOKEN_TYPES.OP, '}'
-    brace.children[TOKEN_TYPES.OP, ':'].post = 1
-    brace.children[TOKEN_TYPES.OP, ','].post = 1
+    brace.children.default_type = TOKEN_TYPES.OP
+    brace.children[':'].post = 1
+    brace.children[','].post = 1
     brace.children[TOKEN_TYPES.NAME].surround = 0
 
     # Within slices we don't want extra space around the :
     bracket = token_offsets[TOKEN_TYPES.OP, '[']
     bracket.end = TOKEN_TYPES.OP, ']'
-    bracket.children[TOKEN_TYPES.OP, ':'].surround = 0
-    bracket.children[TOKEN_TYPES.OP, ','].post = 1
-    bracket.children[TOKEN_TYPES.NAME, 'for'].surround = 1
-    bracket.children[TOKEN_TYPES.NAME, 'if'].surround = 1
+    bracket.children.default_type = TOKEN_TYPES.OP
+    bracket.children[':'].surround = 0
+    bracket.children[','].post = 1
+    bracket.children.default_type = TOKEN_TYPES.NAME
+    bracket.children['for'].surround = 1
+    bracket.children['if'].surround = 1
     bracket.children.update(keywords)
 
     # A little recursion to handle cases with braces in parenthesis and vice
     # versa
-    brace.children[TOKEN_TYPES.OP, '{'] = brace
-    brace.children[TOKEN_TYPES.OP, '('] = paren
-    brace.children[TOKEN_TYPES.OP, '['] = bracket
-    paren.children[TOKEN_TYPES.OP, '{'] = brace
-    paren.children[TOKEN_TYPES.OP, '('] = paren
-    paren.children[TOKEN_TYPES.OP, '['] = bracket
-    bracket.children[TOKEN_TYPES.OP, '{'] = brace
-    bracket.children[TOKEN_TYPES.OP, '('] = paren
-    bracket.children[TOKEN_TYPES.OP, '['] = bracket
+    brace.children.default_type = TOKEN_TYPES.OP
+    paren.children.default_type = TOKEN_TYPES.OP
+    bracket.children.default_type = TOKEN_TYPES.OP
+    brace.children['{'] = brace
+    brace.children['('] = paren
+    brace.children['['] = bracket
+    paren.children['{'] = brace
+    paren.children['('] = paren
+    paren.children['['] = bracket
+    bracket.children['{'] = brace
+    bracket.children['('] = paren
+    bracket.children['['] = bracket
 
     # Classes need a space after class and no space before (
     class_ = token_offsets[TOKEN_TYPES.NAME, 'class']
     class_.post = 1
     class_.end = TOKEN_TYPES.OP, ':'
+    class_.children.default_type = TOKEN_TYPES.OP
+    class_.children['{'] = brace
+    class_.children['('] = paren
+    class_.children['['] = bracket
     class_.children[TOKEN_TYPES.NAME].post = 0
-    class_.children[TOKEN_TYPES.OP, '{'] = brace
-    class_.children[TOKEN_TYPES.OP, '('] = paren
-    class_.children[TOKEN_TYPES.OP, '['] = bracket
 
     # Def need a space after def and no space before (
     def_ = token_offsets[TOKEN_TYPES.NAME, 'def']
     def_.post = 1
     def_.end = TOKEN_TYPES.OP, ':'
+    def_.children.default_type = TOKEN_TYPES.OP
+    def_.children['{'] = brace
+    def_.children['('] = paren
+    def_.children['['] = bracket
     def_.children[TOKEN_TYPES.NAME].post = 0
-    def_.children[TOKEN_TYPES.OP, '{'] = brace
-    def_.children[TOKEN_TYPES.OP, '('] = paren
-    def_.children[TOKEN_TYPES.OP, '['] = bracket
 
     # Make sure a from ... import ... style import has the space it needs
     from_ = token_offsets[TOKEN_TYPES.NAME, 'from']
@@ -328,50 +381,10 @@ def get_token_offsets():
         (TOKEN_TYPES.OP, ','),
         (TOKEN_TYPES.NEWLINE, None),
     ]
-    print_.children[TOKEN_TYPES.OP, '>>'].surround = 0
-    print_.children[TOKEN_TYPES.OP, '%'].surround = 1
-    print_.children[TOKEN_TYPES.OP, ','].post = 1
-
-    # Within dicts we don't want extra space around the :
-    paren = token_offsets[TOKEN_TYPES.OP, '{']
-    paren.end = TOKEN_TYPES.OP, '}'
-    paren.children[':'].post = 1
-    paren.children[','].post = 1
-    paren.children[TOKEN_TYPES.NAME].surround = 0
-
-    # Operators
-    token_offsets['!='].surround = 1
-    token_offsets['%'].surround = 1
-    token_offsets['%='].surround = 1
-    token_offsets['&'].surround = 1
-    token_offsets['&='].surround = 1
-    token_offsets['*'].surround = 1
-    token_offsets['**'].surround = 1
-    token_offsets['**='].surround = 1
-    token_offsets['*='].surround = 1
-    token_offsets['+'].surround = 1
-    token_offsets['+='].surround = 1
-    token_offsets['-'].surround = 1
-    token_offsets['-='].surround = 1
-    token_offsets['/'].surround = 1
-    token_offsets['//'].surround = 1
-    token_offsets['//='].surround = 1
-    token_offsets['/='].surround = 1
-    token_offsets['<'].surround = 1
-    token_offsets['<<'].surround = 1
-    token_offsets['<<='].surround = 1
-    token_offsets['<='].surround = 1
-    token_offsets['=='].surround = 1
-    token_offsets['>'].surround = 1
-    token_offsets['>='].surround = 1
-    token_offsets['>>'].surround = 1
-    token_offsets['>>='].surround = 1
-    token_offsets['^'].surround = 1
-    token_offsets['^='].surround = 1
-    token_offsets[TOKEN_TYPES.NAME, 'is'].surround = 1
-    token_offsets['|'].surround = 1
-    token_offsets['|='].surround = 1
-    token_offsets['='].surround = 1
+    print_.children.default_type = TOKEN_TYPES.OP
+    print_.children['>>'].surround = 0
+    print_.children['%'].surround = 1
+    print_.children[','].post = 1
 
     stream = StringIO()
     token_offset.pprint(stream)
