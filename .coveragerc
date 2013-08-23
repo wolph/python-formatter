@@ -8,3 +8,7 @@ source = formatting
 branch = True
 omit =
     */nose/*
+    */tests/*
+    */pep8.py
+    */tokenize.py
+
