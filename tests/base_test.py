@@ -56,10 +56,11 @@ def main(*argv):
 
     logger = logging.getLogger('')
     logger.setLevel(level)
+    logger.addHandler(logging.StreamHandler())
 
     for module_name in args.modules:
         module = get_module(module_name)
-        for k, v in module.__dict__.items():
+        for k, v in sorted(module.__dict__.items()):
             if k.startswith('test_') and hasattr(v, '__call__'):
                 print 'Running %r' % k
                 v()

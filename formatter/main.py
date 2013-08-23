@@ -22,9 +22,14 @@ def main(*argv):
     else:
         level = logging.WARN
 
+    handler = logging.StreamHandler()
     logger = logging.getLogger('')
     logger.setLevel(level)
+    logger.addHandler(handler)
 
     formatter = Formatter()
     for file_ in args.files:
         formatter.format_path(file_, args.recursive)
+
+    logger.removeHandler(handler)
+
