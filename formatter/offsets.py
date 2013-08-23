@@ -301,6 +301,7 @@ def get_token_offsets():
     paren = token_offsets[TOKEN_TYPES.OP, '(']
     paren.end = TOKEN_TYPES.OP, ')'
     paren.children.default_type = TOKEN_TYPES.OP
+    paren.children['-'].surround = 0
     paren.children['='].surround = 0
     paren.children['*'].surround = 0
     paren.children['**'].surround = 0

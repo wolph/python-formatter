@@ -7,7 +7,7 @@ def test_types():
     t.line = 'abc'
     t.row = t.row
     assert t == 0
-    assert not t == None
+    assert not t == 0.0
     assert t == (t.tok_type, t.token)
     # Yes, sounds weird but to make things easier (matching the end)
     # this is a more convenient working of the equals

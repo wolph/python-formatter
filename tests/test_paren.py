@@ -16,6 +16,7 @@ def test_paren_simple():
         '(())\n',
     )
 
+
 def test_generator():
     tools.eq_(
         Formatter.format_string('(x for x in range(5) if x)'),
@@ -25,6 +26,7 @@ def test_generator():
         Formatter.format_string('((x, y) for x, y in enumerate(range(5)))'),
         '((x, y) for x, y in enumerate(range(5)))\n',
     )
+
 
 def test_paren_complex():
     tools.eq_(

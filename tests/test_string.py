@@ -10,7 +10,7 @@ def test_string():
 
 
 def test_string_type():
-    x = types.StringTokenType( - 255, 'TEST')
+    x = types.StringTokenType(-255, 'TEST')
     t = tokens.Token({(0, ''): None}, 0, '', (0, 0), (0, 0), '')
     x.preprocess(t)
 
