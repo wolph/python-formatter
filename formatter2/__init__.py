@@ -1,4 +1,4 @@
-__package_name__ = 'formatter'
+__package_name__ = 'formatter2'
 __version__ = '1.0.3'
 __author__ = 'Rick van Hattem'
 __author_email__ = 'Wolph@wol.ph'
