@@ -1,5 +1,5 @@
 import os
-import formatter as metadata
+import formatter2 as metadata
 from setuptools import setup, find_packages
 
 if os.path.isfile('README.rst'):
@@ -22,14 +22,14 @@ setup(
         'pep8',
     ],
     setup_requires=['nose', 'mock', 'coverage'],
-    py_modules=['formatter'],
+    py_modules=['formatter2.formatter'],
     classifiers=[
         'License :: OSI Approved :: BSD License',
     ],
     entry_points={
         'console_scripts': [
-            'python-formatter = formatter.main:main',
-            'format-python = formatter.main:main',
+            'python-formatter = formatter2.main:main',
+            'format-python = formatter2.main:main',
         ],
     },
 )

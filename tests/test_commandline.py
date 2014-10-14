@@ -1,6 +1,6 @@
 import os
 import logging
-from formatter import Formatter
+from formatter2 import Formatter
 import difflib
 
 def get_file_contents(path):
@@ -43,7 +43,7 @@ def test_format_path():
     formatter.format_path('tests/samples/generators.py')
 
 def test_main():
-    from formatter.main import main
+    from formatter2.main import main
     try:
         main('formatter/main.py', 'non_existing_directory')
     except SystemExit:

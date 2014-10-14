@@ -1,4 +1,4 @@
-from formatter import types, tokens, Formatter
+from formatter2 import types, tokens, Formatter
 from nose import tools
 
 

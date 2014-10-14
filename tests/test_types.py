@@ -1,4 +1,4 @@
-from formatter import types, tokens
+from formatter2 import types, tokens
 
 
 def test_types():

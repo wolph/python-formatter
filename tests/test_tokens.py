@@ -1,5 +1,5 @@
-from formatter import TokenOffsets, TokenOffset, TOKEN_OFFSETS
-from formatter import tokens
+from formatter2 import TokenOffsets, TokenOffset, TOKEN_OFFSETS
+from formatter2 import tokens
 import nose
 from StringIO import StringIO
 import logging

@@ -1,4 +1,4 @@
-from formatter import Formatter
+from formatter2 import Formatter
 from nose import tools
 
 
