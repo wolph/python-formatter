@@ -12,7 +12,7 @@ Introduction
     :alt: Coverage Status
     :target: https://coveralls.io/r/WoLpH/python-formatter?branch=master
 
-`formatter` is a Python formatter based on the `tokenize` library in Python.
+`formatter2` is a Python formatter based on the `tokenize` library in Python.
 Due to a bug with line continuations we are currently running a fork of the
 `tokenize` library however.
 
@@ -27,7 +27,7 @@ Install
 -------
 
 To install simply execute `python setup.py install` or `pip install
-formatter`.
+formatter2`.
 If you want to run the tests first, run `nosetests`
 
 Usage

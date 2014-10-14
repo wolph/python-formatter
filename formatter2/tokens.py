@@ -261,28 +261,28 @@ class Token(object):
     Setting this to a tuple will set the first to the begin and the latter to
     the end.
 
-    This returns a :py:class:`~formatter.tokens.SmartList` with the begin and
+    This returns a :py:class:`~formatter2.tokens.SmartList` with the begin and
     end column.''')
     row = property(_get_row, _set_row, doc='''The row.
 
     Setting this to a tuple will set the first to the begin and the latter to
     the end.
 
-    This returns a :py:class:`~formatter.tokens.SmartList` with the begin and
+    This returns a :py:class:`~formatter2.tokens.SmartList` with the begin and
     end row.''')
     begin = property(_get_begin, _set_begin, doc='''The begin coordinates.
 
     Settings this to a tuple will set the first to the row and the latter to
     the col.
 
-    This returns a :py:class:`~formatter.tokens.SmartList` with the row and
+    This returns a :py:class:`~formatter2.tokens.SmartList` with the row and
     the column.''')
     end = property(_get_end, _set_end, doc='''The end.
 
     Settings this to a tuple will set the first to the row and the latter to
     the col.
 
-    This returns a :py:class:`~formatter.tokens.SmartList` with the row and
+    This returns a :py:class:`~formatter2.tokens.SmartList` with the row and
     column.''')
     begin_col = property(_get_begin_col, _set_begin_col, doc='''The begin
     column.''')
@@ -299,7 +299,7 @@ class Token(object):
     Returns a :func:`str` object with the line.''')
 
     def preprocess(self):
-        ':func:`formatter.types.TokenType.preprocess`'
+        ':func:`formatter2.types.TokenType.preprocess`'
         self.type.preprocess(self)
 
     def __len__(self):

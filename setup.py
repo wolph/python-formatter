@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 if os.path.isfile('README.rst'):
     long_description = open('README.rst').read()
 else:
-    long_description = 'See http://pypi.python.org/pypi/formatter/'
+    long_description = 'See http://pypi.python.org/pypi/formatter2/'
 
 setup(
     name=metadata.__package_name__,

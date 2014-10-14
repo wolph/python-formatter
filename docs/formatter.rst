@@ -4,7 +4,7 @@ formatter Package
 :mod:`formatter` Package
 ------------------------
 
-.. automodule:: formatter
+.. automodule:: formatter2
     :members:
     :undoc-members:
     :show-inheritance:
@@ -12,7 +12,7 @@ formatter Package
 :mod:`formatter` Module
 -----------------------
 
-.. automodule:: formatter.formatter
+.. automodule:: formatter2.formatter
     :members:
     :undoc-members:
     :show-inheritance:
@@ -20,7 +20,7 @@ formatter Package
 :mod:`main` Module
 ------------------
 
-.. automodule:: formatter.main
+.. automodule:: formatter2.main
     :members:
     :undoc-members:
     :show-inheritance:
@@ -28,7 +28,7 @@ formatter Package
 :mod:`offsets` Module
 ---------------------
 
-.. automodule:: formatter.offsets
+.. automodule:: formatter2.offsets
     :members:
     :undoc-members:
     :show-inheritance:
@@ -36,7 +36,7 @@ formatter Package
 :mod:`tokens` Module
 --------------------
 
-.. automodule:: formatter.tokens
+.. automodule:: formatter2.tokens
     :members:
     :undoc-members:
     :show-inheritance:
@@ -44,7 +44,7 @@ formatter Package
 :mod:`types` Module
 -------------------
 
-.. automodule:: formatter.types
+.. automodule:: formatter2.types
     :members:
     :undoc-members:
     :show-inheritance:
