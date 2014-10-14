@@ -35,5 +35,9 @@ Usage
 
 To format all of your code recursively (MAKE BACKUPS!):
 
-    formatter -r DIRECTORY
+    python-formatter -r DIRECTORY
+
+Or:
+
+    format-python -r DIRECTORY
 

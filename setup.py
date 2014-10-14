@@ -27,6 +27,9 @@ setup(
         'License :: OSI Approved :: BSD License',
     ],
     entry_points={
-        'console_scripts': ['formatter = formatter.main:main'],
+        'console_scripts': [
+            'python-formatter = formatter.main:main',
+            'format-python = formatter.main:main',
+        ],
     },
 )
