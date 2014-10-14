@@ -3,9 +3,11 @@ import logging
 from formatter2 import Formatter
 import difflib
 
+
 def get_file_contents(path):
     with open(path) as fh:
         return path, fh.read()
+
 
 def get_contents(search_path):
     for path, dirs, files in os.walk(search_path):
@@ -14,11 +16,12 @@ def get_contents(search_path):
                 full_path = os.path.join(path, file_)
                 yield get_file_contents(full_path)
 
+
 def check_or_revert(old_contents, full_path, new_content):
-    old_content = old_contents[full_path] 
+    old_content = old_contents[full_path]
     if old_content != new_content:
         logging.error('File %r in the sample set changed, reverting '
-            'change', full_path)
+                      'change', full_path)
 
         diff = '\n'.join(difflib.unified_diff(
             old_content.split('\n'),
@@ -33,6 +36,7 @@ def check_or_revert(old_contents, full_path, new_content):
         raise RuntimeError(
             'Contents of sample files should not change: %r ' % full_path)
 
+
 def test_format_path():
     formatter = Formatter()
     file_contents = dict(get_contents('tests/samples/'))
@@ -42,25 +46,26 @@ def test_format_path():
 
     formatter.format_path('tests/samples/generators.py')
 
+
 def test_main():
     from formatter2.main import main
     try:
-        main('formatter/main.py', 'non_existing_directory')
+        main('formatter2/main.py', 'non_existing_directory')
     except SystemExit:
         pass
 
     try:
-        main('formatter/main.py', '-v', 'non_existing_directory')
+        main('formatter2/main.py', '-v', 'non_existing_directory')
     except SystemExit:
         pass
 
     try:
-        main('formatter/main.py', '-vv', 'non_existing_directory')
+        main('formatter2/main.py', '-vv', 'non_existing_directory')
     except SystemExit:
         pass
 
     try:
-        main('formatter/main.py', '-vvv', 'non_existing_directory')
+        main('formatter2/main.py', '-vvv', 'non_existing_directory')
     except SystemExit:
         pass
 

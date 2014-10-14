@@ -21,7 +21,7 @@ setup(
     install_requires=[
         'pep8',
     ],
-    setup_requires=['nose', 'mock', 'coverage'],
+    setup_requires=['nose', 'mock', 'coverage', 'tissue'],
     py_modules=['formatter2.formatter'],
     classifiers=[
         'License :: OSI Approved :: BSD License',

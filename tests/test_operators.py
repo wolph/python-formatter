@@ -33,6 +33,7 @@ def test_assignment():
     tools.eq_(Formatter.format_string('a ^ b'), 'a ^ b\n\n')
     tools.eq_(Formatter.format_string('a ^= b'), 'a ^= b\n\n')
     tools.eq_(Formatter.format_string('a is b'), 'a is b\n\n')
+    tools.eq_(Formatter.format_string('a is not b'), 'a is not b\n\n')
     tools.eq_(Formatter.format_string('a | b'), 'a | b\n\n')
     tools.eq_(Formatter.format_string('a |= b'), 'a |= b\n\n')
     tools.eq_(Formatter.format_string('a = b'), 'a = b\n\n')
