@@ -70,6 +70,6 @@ def test_main():
         pass
 
 if __name__ == '__main__':
-    from base_test import main
+    from .base_test import main
     main()
 

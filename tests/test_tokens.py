@@ -1,6 +1,6 @@
-from formatter2 import TokenOffsets, TokenOffset, TOKEN_OFFSETS, tokens
+from formatter2 import (TokenOffsets, TokenOffset, TOKEN_OFFSETS, tokens,
+                        _stringio)
 import nose
-from StringIO import StringIO
 import logging
 
 
@@ -27,7 +27,7 @@ def test_token_offsets():
 
     x.set(5)
 
-    y = tokens.Tokens(StringIO('a=1\nb=1').readline)
+    y = tokens.Tokens(_stringio.StringIO('a=1\nb=1').readline)
     y = list(y)
     y[-1] -= y[-1]
     y[0].line = ' ' + y[0].line + ' '
@@ -48,10 +48,3 @@ def test_sub():
     x - 1
     x - (1, 1)
     x - 'a'
-
-if __name__ == '__main__':
-    for k, v in globals().items():
-        if k.startswith('test_') and hasattr(v, '__call__'):
-            print 'Running %r' % k
-            v()
-

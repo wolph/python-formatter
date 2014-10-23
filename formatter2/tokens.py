@@ -1,4 +1,4 @@
-import tokenize_fork as tokenize
+from . import tokenize_fork as tokenize
 from .offsets import TOKEN_OFFSETS
 from .types import TOKEN_TYPES
 import logging
@@ -34,7 +34,7 @@ class SmartList(list):
             for i, v in enumerate(other):
                 new[i] += v
 
-        elif isinstance(other, (int, long)):
+        elif isinstance(other, int):
             for i, v in enumerate(self):
                 new[i] += other
 
@@ -55,7 +55,7 @@ class SmartList(list):
             for i, v in enumerate(self):
                 new[i] -= v
 
-        elif isinstance(other, (int, long)):
+        elif isinstance(other, int):
             for i, v in enumerate(self):
                 new[i] -= other
 
@@ -147,13 +147,13 @@ class Tokens(object):
         return self
 
     def _strip(self, iterator):
-        current = iterator.next()
-        for next in iterator:
-            if current.end_row == next.begin_row:
-                next.col -= next.begin_col - current.end_col
+        current = next(iterator)
+        for next_ in iterator:
+            if current.end_row == next_.begin_row:
+                next_.col -= next_.begin_col - current.end_col
 
             yield current
-            current = next
+            current = next_
 
         yield current
 
@@ -331,11 +331,29 @@ class Token(object):
             raise TypeError('Dont know how to compare %r to %r' % (
                 self, other))
 
-    def __cmp__(self, other):
+    def __lt__(self, other):
         if other:
-            return cmp(self.end, other.begin)
+            return self.end < other.begin
         else:
-            return 0
+            return False
+
+    def __le__(self, other):
+        if other:
+            return self.end <= other.begin
+        else:
+            return True
+
+    def __gt__(self, other):
+        if other:
+            return self.end > other.begin
+        else:
+            return False
+
+    def __ge__(self, other):
+        if other:
+            return self.end >= other.begin
+        else:
+            return True
 
     def __sub__(self, other):
         assert self.end_row == other.begin_row

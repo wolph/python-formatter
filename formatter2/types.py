@@ -1,4 +1,4 @@
-import tokenize_fork as tokenize
+from . import tokenize_fork as tokenize
 import logging
 
 logger = logging.getLogger(__name__)
@@ -9,7 +9,7 @@ class TokenTypes(dict):
     def __init__(self):
         self.logger = logger.getChild(self.__class__.__name__)
         self.by_name = {}
-        for tok_id, tok_name in tokenize.tok_name.iteritems():
+        for tok_id, tok_name in tokenize.tok_name.items():
             self.register(TokenType(tok_id, tok_name))
 
         self.register(DefaultTokenType())
@@ -29,7 +29,7 @@ class TokenTypes(dict):
 
     def __repr__(self):
         is_int = lambda v: isinstance(v, int)
-        return repr(dict((k, v) for k, v in self.iteritems() if is_int(k)))
+        return repr(dict((k, v) for k, v in self.items() if is_int(k)))
 
     def __getattr__(self, key):
         if key in self:

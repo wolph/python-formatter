@@ -39,8 +39,8 @@ def test_assignment():
     tools.eq_(Formatter.format_string('a = b'), 'a = b\n\n')
 
 if __name__ == '__main__':
-    for k, v in globals().items():
+    for k, v in list(globals().items()):
         if k.startswith('test_') and hasattr(v, '__call__'):
-            print 'Running %r' % k
+            print(('Running %r' % k))
             v()
 

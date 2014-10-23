@@ -1,8 +1,10 @@
+from __future__ import print_function
+
 import os
 import sys
 import logging
-from cStringIO import StringIO
 
+from . import _stringio
 from .tokens import Tokens
 
 
@@ -24,8 +26,8 @@ class Formatter(object):
             tokens = Tokens.from_readline(sys.stdin.readline)
         else:
             with open(input_file) as fh:
-                file_ = StringIO()
-                print >>file_, fh.read()
+                file_ = _stringio.StringIO()
+                print(fh.read(), file=file_)
                 file_.seek(0)
                 tokens = Tokens.from_readline(file_.readline)
 
@@ -72,6 +74,6 @@ class Formatter(object):
     @classmethod
     def format_string(cls, string):
         formatter = Formatter()
-        fh = StringIO()
-        print >>fh, string
+        fh = _stringio.StringIO()
+        print(string, file=fh)
         return formatter(fh)

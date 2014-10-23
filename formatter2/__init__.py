@@ -1,5 +1,5 @@
 __package_name__ = 'formatter2'
-__version__ = '1.0.4'
+__version__ = '1.1.0'
 __author__ = 'Rick van Hattem'
 __author_email__ = 'Wolph@wol.ph'
 __description__ = '''A Python source formatter that uses the tokenize library

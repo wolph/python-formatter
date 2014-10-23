@@ -9,8 +9,8 @@ def main(*argv):
     parser.add_argument('files', nargs='+')
     parser.add_argument('-r', '--recursive', action='store_true',
                         help='Process directories recursively')
-    parser.add_argument(
-        '-v', '--verbosity', action='count', help='Increase verbosity')
+    parser.add_argument('-v', '--verbosity', action='count',
+                        help='Increase verbosity', default=0)
 
     argv = argv or sys.argv
     args = parser.parse_args(argv[1:])

@@ -1,7 +1,9 @@
+from __future__ import print_function
+
 import sys
 import logging
-from cStringIO import StringIO
 
+from . import _stringio
 from .types import TOKEN_TYPES, TokenType
 
 logger = logging.getLogger(__name__)
@@ -27,11 +29,11 @@ class TokenOffsets(dict):
     def __repr__(self):
         return '<%s\n  %s\n>' % (
             self.__class__.__name__,
-            '\n  '.join(sorted(repr(v) for v in set(self.itervalues()))),
+            '\n  '.join(sorted(repr(v) for v in set(self.values()))),
         )
 
     def get_key(self, key):
-        if isinstance(key, basestring):
+        if isinstance(key, str):
             # Only a token given, no string. Return the default token type
             assert self.default_type, 'Token type must be given'
             key = self.default_type, key
@@ -74,12 +76,12 @@ class TokenOffsets(dict):
         return value
 
     def update(self, other):
-        for k, v in other.iteritems():
+        for k, v in other.items():
             if k not in self:
                 self[k].update(v)
 
     def __setitem__(self, key, value):
-        if isinstance(key, basestring):
+        if isinstance(key, str):
             assert self.default_type, 'Token type must be given'
             key = self.default_type, key
 
@@ -104,6 +106,9 @@ class TokenOffset(object):
                 default_type=TOKEN_TYPES[type_],
             )
         self.children = children
+
+    def __gt__(self, other):
+        return (self.pre, self.post) > (other.pre, other.post)
 
     def update(self, other):
         self.pre = other.pre
@@ -157,7 +162,7 @@ class TokenOffset(object):
         if end is not None:
             if not isinstance(end, list):
                 end = [end]
-            end = map(self.parent.get_key, end)
+            end = list(map(self.parent.get_key, end))
         self._end = end
 
     parent = property(_get_parent, _set_parent, doc='''The parent.
@@ -210,12 +215,12 @@ class DefaultTokenOffset(TokenOffset):
             stream.write('[ ')
 
         offset.end, end = None, offset.end
-        print >>stream, repr(offset)
+        print(repr(offset), file=stream)
         offset.end = end
 
         if offset in visited and offset.end:
             stream.write(' ' * (depth + 4))
-            print >>stream, 'RECURSION'
+            print('RECURSION', file=stream)
         else:
             visited[offset] = True
             for child in sorted(offset.children.values()):
@@ -224,7 +229,7 @@ class DefaultTokenOffset(TokenOffset):
         if offset.end:
             stream.write(' ' * depth)
             stream.write('] ')
-            print >>stream, repr(offset.end)
+            print(repr(offset.end), file=stream)
 
     def pprint(self, stream=sys.stderr):
         return self._pprint(stream, self, visited={}, depth=1)
@@ -247,7 +252,7 @@ def get_token_offsets():
     keywords['yield'].post = 1
     keywords['raise'].post = 1
     keywords['lambda'].post = 1
-    
+
     keywords['as'].surround = 1
     keywords['in'].surround = 1
     keywords['or'].surround = 1
@@ -388,7 +393,7 @@ def get_token_offsets():
     print_.children['%'].surround = 1
     print_.children[','].post = 1
 
-    stream = StringIO()
+    stream = _stringio.StringIO()
     token_offset.pprint(stream)
     logger.debug('Token offsets:\n%s', stream.getvalue())
 
