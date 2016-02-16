@@ -28,7 +28,9 @@ class TokenTypes(dict):
             self[key] = token_type
 
     def __repr__(self):
-        is_int = lambda v: isinstance(v, int)
+        def is_int(v):
+            return isinstance(v, int)
+
         return repr(dict((k, v) for k, v in self.items() if is_int(k)))
 
     def __getattr__(self, key):
@@ -91,9 +93,9 @@ class StringTokenType(TokenType):
             elif "'" in new_string and "'''" not in new_string:
                 token.token = "'''%s'''" % new_string
         # Replace ''' with '
-        elif (string.startswith("'''") and string.endswith("'''")
-                and token.begin_row == token.end_row):
-            new_string = string[3:-3]
+        elif (string.startswith("'''") and string.endswith("'''") and
+              token.begin_row == token.end_row):
+            new_string = string[3: -3]
             if "'" not in new_string:
                 token.token = "'%s'" % new_string
 
