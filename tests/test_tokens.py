@@ -36,15 +36,15 @@ def test_token_offsets():
     logging.error('token: %r :: %s', y[0], y[0])
 
 
-@pytest.mark.xfail(TypeError)
 def test_add():
-    x = tokens.SmartList(1, 2)
-    x + 'a'
+    with pytest.raises(TypeError):
+        x = tokens.SmartList(1, 2)
+        x + 'a'
 
 
-@pytest.mark.xfail(TypeError)
 def test_sub():
-    x = tokens.SmartList(1, 2)
-    x - 1
-    x - (1, 1)
-    x - 'a'
+    with pytest.raises(TypeError):
+        x = tokens.SmartList(1, 2)
+        x - 1
+        x - (1, 1)
+        x - 'a'
