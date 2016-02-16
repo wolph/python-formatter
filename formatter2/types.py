@@ -77,27 +77,34 @@ class StringTokenType(TokenType):
         This automatically replaces strings with " to ' if possible
         '''
         string = token.token
-        # Replace """ with ' or '''
+        # Strip """
         if string.startswith('"""') and string.endswith('"""'):
             new_string = string[3:-3]
-            if "'" not in new_string:
-                token.token = "'%s'" % new_string
-            elif ("'" in new_string and "'''" not in new_string and
-                    token.begin_row == token.end_row):
-                token.token = "'''%s'''" % new_string
-        # Replace " with ' or '''
-        elif string.startswith('"') and string.endswith('"'):
-            new_string = string[1:-1]
-            if "'" not in new_string:
-                token.token = "'%s'" % new_string
-            elif "'" in new_string and "'''" not in new_string:
-                token.token = "'''%s'''" % new_string
-        # Replace ''' with '
+        # Strip '''
         elif (string.startswith("'''") and string.endswith("'''") and
               token.begin_row == token.end_row):
             new_string = string[3: -3]
-            if "'" not in new_string:
-                token.token = "'%s'" % new_string
+        # Strip "
+        elif string.startswith('"') and string.endswith('"'):
+            new_string = string[1:-1]
+        # Strip '
+        elif string.startswith("'") and string.endswith("'"):
+            new_string = string[1:-1]
+        elif not string:
+            new_string = string
+        else:
+            raise RuntimeError('Strings should be surrounded with quotes',
+                               token, token.token)
+
+        # Multiline strings or strings with single quotes
+        if '\n' in new_string or "'" in new_string:
+            if "'''" in token.token:
+                token.token = "'''%s'''" % new_string.replace("'''", r"\'\'\'")
+            else:
+                token.token = "'''%s'''" % new_string
+        # Single line strings without quotes
+        else:
+            token.token = "'%s'" % new_string
 
         return token
 

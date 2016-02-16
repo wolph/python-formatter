@@ -11,6 +11,8 @@ def main(*argv):
                         help='Process directories recursively')
     parser.add_argument('-v', '--verbosity', action='count',
                         help='Increase verbosity', default=0)
+    parser.add_argument('-d', '--debug', action='store_true',
+                        help='Enter the debugger on exception')
 
     argv = argv or sys.argv
     args = parser.parse_args(argv[1:])
@@ -27,9 +29,18 @@ def main(*argv):
     logger.setLevel(level)
     logger.addHandler(handler)
 
-    formatter = Formatter()
-    for file_ in args.files:
-        formatter.format_path(file_, args.recursive)
+    try:
+        formatter = Formatter()
+        for file_ in args.files:
+            formatter.format_path(file_, args.recursive)
+    except Exception:
+        if args.debug:
+            type_, value, tb = sys.exc_info()
+            import pdb
+            pdb.post_mortem(tb)
+
+        else:
+            raise
 
     logger.removeHandler(handler)
 

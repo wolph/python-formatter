@@ -1,7 +1,6 @@
 from __future__ import print_function
 
 from formatter2 import Formatter
-from nose import tools
 import sys
 from io import StringIO
 
@@ -23,10 +22,7 @@ def test_stdin():
     filename = 'tests/test_brace.py'
     test_brace_contents = open(filename, 'r').read()
     formatter(filename)
-    tools.eq_(
-        test_brace_contents,
-        open(filename, 'r').read(),
-    )
+    assert test_brace_contents == open(filename, 'r').read()
 
     sys.stdin = stdin
 

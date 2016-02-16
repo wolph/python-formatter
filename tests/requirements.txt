@@ -1,0 +1,8 @@
+# The docs requirements also adds the main requirements. Unfortunately pip does
+# not tolerate duplicate requirements.
+-r ../docs/requirements.txt
+pytest
+pytest-cov
+pytest-flakes
+pytest-pep8
+

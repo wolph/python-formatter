@@ -1,13 +1,13 @@
-import pytest
-
 from formatter2 import Formatter
 
 
-@pytest.mark.xfail(SyntaxError)
-def test_syntax_error():
-    Formatter.format_string('a = '),
+def test_comments():
+    formatter = Formatter()
+    formatter.format_path('tests/samples/comments.py')
+
 
 if __name__ == '__main__':
     from .base_test import main
     main('-vv')
+
 

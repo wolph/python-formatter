@@ -1,6 +1,6 @@
 from formatter2 import (TokenOffsets, TokenOffset, TOKEN_OFFSETS, tokens,
                         _stringio)
-import nose
+import pytest
 import logging
 
 
@@ -36,13 +36,13 @@ def test_token_offsets():
     logging.error('token: %r :: %s', y[0], y[0])
 
 
-@nose.tools.raises(TypeError)
+@pytest.mark.xfail(TypeError)
 def test_add():
     x = tokens.SmartList(1, 2)
     x + 'a'
 
 
-@nose.tools.raises(TypeError)
+@pytest.mark.xfail(TypeError)
 def test_sub():
     x = tokens.SmartList(1, 2)
     x - 1
