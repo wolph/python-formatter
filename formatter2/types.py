@@ -68,6 +68,19 @@ class TokenType(object):
         return token
 
 
+class CommentTokenType(TokenType):
+    name = 'COMMENT'
+
+    def preprocess(self, token):
+        string = token.token
+        string = string.strip()
+        if string.startswith('#') and not string[1:].startswith(' '):
+            string = '# %s' % string[1:]
+
+        token.token = string
+        return token
+
+
 class StringTokenType(TokenType):
     name = 'STRING'
 
@@ -81,8 +94,7 @@ class StringTokenType(TokenType):
         if string.startswith('"""') and string.endswith('"""'):
             new_string = string[3:-3]
         # Strip '''
-        elif (string.startswith("'''") and string.endswith("'''") and
-              token.begin_row == token.end_row):
+        elif string.startswith("'''") and string.endswith("'''"):
             new_string = string[3: -3]
         # Strip "
         elif string.startswith('"') and string.endswith('"'):
@@ -92,7 +104,7 @@ class StringTokenType(TokenType):
             new_string = string[1:-1]
         elif not string:
             new_string = string
-        else:
+        else:  # pragma: no cover
             raise RuntimeError('Strings should be surrounded with quotes',
                                token, token.token)
 
@@ -105,7 +117,6 @@ class StringTokenType(TokenType):
         # Single line strings without quotes
         else:
             token.token = "'%s'" % new_string
-
         return token
 
 
@@ -118,6 +129,7 @@ class DefaultTokenType(TokenType):
 def get_token_types():
     token_types = TokenTypes()
     token_types.register(StringTokenType)
+    token_types.register(CommentTokenType)
     return token_types
 
 TOKEN_TYPES = get_token_types()
