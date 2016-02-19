@@ -150,7 +150,14 @@ class Tokens(object):
         current = next(iterator)
         for next_ in iterator:
             if current.end_row == next_.begin_row:
-                next_.col -= next_.begin_col - current.end_col
+                delta = next_.begin_col - current.end_col
+                if next_.offset.pre_collapse and current.offset.post_collapse:
+                    # We need to collapse both, nothing special here
+                    pass
+                elif delta:
+                    # One of the two doesn't need collapsing so substract 1
+                    delta -= 1
+                next_.col -= delta
 
             yield current
             current = next_

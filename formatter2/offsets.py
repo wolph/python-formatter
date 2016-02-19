@@ -91,7 +91,7 @@ class TokenOffsets(dict):
 class TokenOffset(object):
 
     def __init__(self, parent, type_, token, pre=0, post=0, children=None,
-                 end=None):
+                 end=None, pre_collapse=True, post_collapse=True):
         self.logger = logger.getChild(self.__class__.__name__)
         self.token = token
         self.pre = pre
@@ -99,6 +99,8 @@ class TokenOffset(object):
         self.type = type_
         self.parent = parent
         self.end = end
+        self.pre_collapse = pre_collapse
+        self.post_collapse = post_collapse
 
         if children is None:
             children = TokenOffsets(
@@ -114,6 +116,8 @@ class TokenOffset(object):
         self.pre = other.pre
         self.post = other.post
         self.end = other.end
+        self.pre_collapse = other.pre_collapse
+        self.post_collapse = other.post_collapse
         self.children.update(other.children)
 
     def copy(self, type_=None, token=None):
@@ -123,6 +127,8 @@ class TokenOffset(object):
             token=token or self.token,
             pre=self.pre,
             post=self.post,
+            pre_collapse=self.pre_collapse,
+            post_collapse=self.post_collapse,
         )
 
     def _get_parent(self):
@@ -247,7 +253,11 @@ def get_token_offsets():
     keywords['import'].post = 1
     keywords['for'].post = 1
     keywords['if'].post = 1
+    keywords['if'].pre_collapse = False
+    # keywords['if'].post_collapse = False
     keywords['elif'].post = 1
+    keywords['else'].pre_collapse = False
+    keywords['else'].post_collapse = False
     keywords['return'].post = 1
     keywords['yield'].post = 1
     keywords['raise'].post = 1

@@ -128,8 +128,8 @@ class DefaultTokenType(TokenType):
 
 def get_token_types():
     token_types = TokenTypes()
-    token_types.register(StringTokenType)
     token_types.register(CommentTokenType)
+    token_types.register(StringTokenType)
     return token_types
 
 TOKEN_TYPES = get_token_types()
