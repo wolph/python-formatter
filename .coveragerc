@@ -1,9 +1,16 @@
 [report]
+fail_under = 100
 exclude_lines =
+    def __repr__
+    except Exception:
+    if 0:
     if __name__ == '__main__':
     if __name__ == .__main__.:
+    if self.debug:
+    if settings.DEBUG
     pragma: no cover
-    except Exception:
+    raise AssertionError
+    raise NotImplementedError
 
 [run]
 source = formatter2
