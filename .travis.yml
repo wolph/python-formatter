@@ -19,7 +19,6 @@ install:
 
 script:
     - tox -e $TOX_ENV
-    - py.test
 
 after_success:
     - coveralls
