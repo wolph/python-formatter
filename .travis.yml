@@ -1,16 +1,32 @@
+# Config file for automatic testing at travis-ci.org
+
+sudo: false
 language: python
-python:
-    - "2.7"
+python: 2.7
+env:
+    - TOX_ENV=docs
+    - TOX_ENV=flake8
+    - TOX_ENV=py27 
+    - TOX_ENV=py33 
+    - TOX_ENV=py34 
+    - TOX_ENV=py35 
 
-# command to install dependencies
+# command to install dependencies, e.g. pip install -r requirements.txt 
 install:
-    - pip install . --use-mirrors
-    - pip install coveralls tissue --use-mirrors
+    - pip install -r tests/requirements.txt
+    - pip install -e .
+    - pip install tox
+    - pip install coveralls
 
-# command to run tests
 script:
-    - nosetests --with-coverage --cover-erase --cover-package=formatter
+    - tox -e $TOX_ENV
+    - py.test
 
 after_success:
     - coveralls
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change
 
