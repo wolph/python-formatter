@@ -41,3 +41,6 @@ Or:
 
     format-python -r DIRECTORY
 
+Formatting stdin is also possible:
+
+    cat some_python_file.py | format-python - > some_formatted_file.py
