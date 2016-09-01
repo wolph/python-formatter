@@ -6,7 +6,7 @@ from .types import TOKEN_TYPES
 from . import main
 
 __package_name__ = 'formatter2'
-__version__ = '1.2.1'
+__version__ = '1.2.2'
 __author__ = 'Rick van Hattem'
 __author_email__ = 'Wolph@wol.ph'
 __description__ = '''A Python source formatter that uses the tokenize library
