@@ -81,6 +81,16 @@ class CommentTokenType(TokenType):
         return token
 
 
+class IndentTokenType(TokenType):
+    name = 'INDENT'
+
+    def preprocess(self, token):
+        '''Replace tabs with spaces as pep8 dictates'''
+        # token.token = token.token.replace('\t', 4 * ' ')
+        # token.end_col = len(token.token)
+        return token
+
+
 class StringTokenType(TokenType):
     name = 'STRING'
 
@@ -130,6 +140,7 @@ def get_token_types():
     token_types = TokenTypes()
     token_types.register(CommentTokenType)
     token_types.register(StringTokenType)
+    token_types.register(IndentTokenType)
     return token_types
 
 TOKEN_TYPES = get_token_types()

@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import os
 import sys
 import logging
@@ -27,11 +25,12 @@ class Formatter(object):
         else:
             with open(input_file) as fh:
                 file_ = _stringio.StringIO()
-                print(fh.read(), file=file_)
+                file_.write(fh.read())
                 file_.seek(0)
                 tokens = Tokens.from_readline(file_.readline)
 
         formatted = tokens()
+
         # Test if we didn't break anything
         try:
             compile(formatted, '', 'exec')
@@ -75,5 +74,5 @@ class Formatter(object):
     def format_string(cls, string):
         formatter = Formatter()
         fh = _stringio.StringIO()
-        print(string, file=fh)
+        fh.write(string)
         return formatter(fh)

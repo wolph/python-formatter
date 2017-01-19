@@ -1,9 +1,12 @@
+import re
+import logging
+
 from . import tokenize_fork as tokenize
 from .offsets import TOKEN_OFFSETS
 from .types import TOKEN_TYPES
-import logging
 
 logger = logging.getLogger(__name__)
+space_prefix_re = re.compile('^\s+')
 
 
 class SmartList(list):
@@ -94,6 +97,17 @@ class Tokens(object):
         return Tokens(readline)
 
     def generate_tokens(self, readline):
+        def _tab_to_space(readline):
+            def __tab_to_space(match):
+                return match.group(0).replace('\t', 4 * ' ')
+
+            while True:
+                try:
+                    yield re.sub('^\s+', __tab_to_space, readline())
+                except StopIteration:
+                    break
+
+        readline = iter(_tab_to_space(readline)).next
         offsets = TOKEN_OFFSETS
         stack = []
         logger = self.logger.getChild('generate_tokens')
