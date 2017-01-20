@@ -252,8 +252,8 @@ def get_token_offsets():
     keywords['except'].post = 1
     keywords['import'].post = 1
     keywords['for'].post = 1
-    keywords['while'].post = 1
-    keywords['del'].post = 1
+    # keywords['while'].post = 1
+    # keywords['del'].post = 1
     keywords['if'].post = 1
     keywords['if'].pre_collapse = False
     # keywords['if'].post_collapse = False
@@ -411,4 +411,6 @@ def get_token_offsets():
 
     return token_offsets
 
+
 TOKEN_OFFSETS = get_token_offsets()
+

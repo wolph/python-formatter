@@ -104,7 +104,7 @@ class Tokens(object):
             while True:
                 try:
                     yield re.sub('^\s+', __tab_to_space, readline())
-                except StopIteration:
+                except StopIteration:  # pragma: no cover
                     break
 
         readline = iter(_tab_to_space(readline)).next

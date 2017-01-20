@@ -1,6 +1,7 @@
 def spam():
     yield 'eggs'
 
+
 spam = ('egg %d' % egg for egg in range(5))
 
 
