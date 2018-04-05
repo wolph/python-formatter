@@ -2,12 +2,11 @@
 
 sudo: false
 language: python
-python: 3.6
+python: 3.5
 env:
     - TOX_ENV=docs
     - TOX_ENV=py27 
     - TOX_ENV=py35 
-    - TOX_ENV=py36 
 
 # command to install dependencies, e.g. pip install -r requirements.txt 
 install:
