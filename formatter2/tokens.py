@@ -1,5 +1,6 @@
 import re
 import logging
+import functools
 
 from . import tokenize_fork as tokenize
 from .offsets import TOKEN_OFFSETS
@@ -107,7 +108,7 @@ class Tokens(object):
                 except StopIteration:  # pragma: no cover
                     break
 
-        readline = iter(_tab_to_space(readline)).next
+        readline = functools.partial(next, iter(_tab_to_space(readline)))
         offsets = TOKEN_OFFSETS
         stack = []
         logger = self.logger.getChild('generate_tokens')
