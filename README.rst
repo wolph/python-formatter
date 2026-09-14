@@ -4,11 +4,11 @@ Readme
 Introduction
 ------------
 
-.. image:: https://github.com/wolph/python-formatter/actions/workflows/ci.yml/badge.svg?branch=master
+.. image:: https://img.shields.io/github/actions/workflow/status/wolph/python-formatter/ci.yml?branch=master&label=CI&style=flat-square&labelColor=555
     :alt: Test Status
     :target: https://github.com/wolph/python-formatter/actions/workflows/ci.yml?query=branch%3Amaster
 
-.. image:: https://coveralls.io/repos/github/wolph/python-formatter/badge.svg?branch=master
+.. image:: https://img.shields.io/coverallsCoverage/github/wolph/python-formatter?branch=master&style=flat-square&labelColor=555
     :alt: Coverage Status
     :target: https://coveralls.io/github/wolph/python-formatter?branch=master
 
