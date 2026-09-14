@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - python: '2.7'
+            image: python:2.7.18-buster
+          - python: '3.5'
+            image: python:3.5.10-buster
+          - python: '3.6'
+            image: python:3.6.15-buster
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Test supported Python runtime with 100% coverage
+        env:
+          PYTHON_IMAGE: ${{ matrix.image }}
+        run: |
+          docker run --rm \
+            -v "$PWD:$PWD" -w "$PWD" \
+            "$PYTHON_IMAGE" sh -ec '
+              python -m pip install \
+                pytest==4.6.11 pytest-cov==2.12.1 coverage==5.5 \
+                pep8==1.7.1 mock==3.0.5
+              python -m pytest tests formatter2 --cov-report=xml:coverage.xml
+            '
+      - name: Upload master coverage to Coveralls
+        if: matrix.python == '3.6' && github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+        uses: coverallsapp/github-action@8d6379e14d29928660c4ba802d8e85393440b329 # v2.3.8
+        with:
+          file: coverage.xml
+          format: cobertura

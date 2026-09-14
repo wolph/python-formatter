@@ -4,13 +4,13 @@ Readme
 Introduction
 ------------
 
-.. image:: https://travis-ci.org/WoLpH/python-formatter.png?branch=master
+.. image:: https://github.com/wolph/python-formatter/actions/workflows/ci.yml/badge.svg?branch=master
     :alt: Test Status
-    :target: https://travis-ci.org/WoLpH/python-formatter
+    :target: https://github.com/wolph/python-formatter/actions/workflows/ci.yml?query=branch%3Amaster
 
-.. image:: https://coveralls.io/repos/WoLpH/python-formatter/badge.png?branch=master
+.. image:: https://coveralls.io/repos/github/WoLpH/python-formatter/badge.svg?branch=master
     :alt: Coverage Status
-    :target: https://coveralls.io/r/WoLpH/python-formatter?branch=master
+    :target: https://coveralls.io/github/WoLpH/python-formatter?branch=master
 
 `formatter2` is a Python formatter based on the `tokenize` library in Python.
 Due to a bug with line continuations we are currently running a fork of the
