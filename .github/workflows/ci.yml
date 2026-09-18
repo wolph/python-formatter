@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [master]
+    branches: [master, develop]
   pull_request:
   workflow_dispatch:
 
@@ -47,3 +47,53 @@ jobs:
         with:
           file: coverage.xml
           format: cobertura
+
+  # Dependabot opens against the default branch whenever target-branch is
+  # absent, and its security updates ignore target-branch entirely and always
+  # use the default branch. Either route lands a commit on master, which
+  # re-diverges it from develop. The setting is one line of repository config
+  # and nothing announces it when it changes, so assert it here.
+  repo-config:
+    name: Repository configuration
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Dependabot and the default branch both point at develop
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          default_branch="$(gh api "repos/${GITHUB_REPOSITORY}" --jq '.default_branch')"
+          if [ "$default_branch" != develop ]; then
+            echo "error: the default branch is '${default_branch}', not" \
+              "'develop'. Dependabot security updates always open against" \
+              "the default branch and cannot be redirected." >&2
+            exit 1
+          fi
+
+          # The config file is optional: without it Dependabot still runs
+          # security updates, and those follow the default branch checked
+          # above. Once it exists, every entry has to name develop, because an
+          # entry without target-branch falls back to the default branch of
+          # the day rather than to develop by name.
+          config=.github/dependabot.yml
+          if [ ! -f "$config" ]; then
+            echo "The default branch points at 'develop' and there is no" \
+              "${config}, so only security updates run."
+            exit 0
+          fi
+
+          entries="$(grep -c 'package-ecosystem:' "$config" || true)"
+          targets="$(grep -c 'target-branch: develop' "$config" || true)"
+          if [ "$entries" != "$targets" ]; then
+            echo "error: ${config} declares ${entries} update(s) but" \
+              "${targets} 'target-branch: develop' line(s)." >&2
+            exit 1
+          fi
+          echo "The default branch and ${entries} Dependabot update(s) all" \
+            "point at 'develop'."
